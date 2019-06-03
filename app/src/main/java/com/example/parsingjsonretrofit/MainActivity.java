@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,12 +41,18 @@ public class MainActivity extends AppCompatActivity {
 
         jsonPlaceholderAPI = retrofit.create(JsonPlaceholderAPI.class);
 
-        getComments();
+        //getComments();
+        getPosts();
 
     }
 
     private void getPosts(){
-        Call<List<Posts>> call = jsonPlaceholderAPI.getPosts();
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("userId", "5");
+        parameters.put("_sort", "id");
+        parameters.put("order", "desc");
+
+        Call<List<Posts>> call = jsonPlaceholderAPI.getPosts(parameters);
         call.enqueue(new Callback<List<Posts>>() {
             @Override
             public void onResponse(Call<List<Posts>> call, Response<List<Posts>> response) {
